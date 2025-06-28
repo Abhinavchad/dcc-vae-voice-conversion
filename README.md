@@ -19,18 +19,18 @@ This project is an implementation of a novel unsupervised framework for converti
 
 The pipeline consists of several key neural network components:
 
-1.  [cite_start]**Multi-Head Encoder:** A single encoder body with specialized heads to disentangle the input spectrogram into `z_content` and `z_speaker`[cite: 121]. [cite_start]Instance Normalization is used in the content encoder to help remove speaker-specific statistics[cite: 92, 126].
+1.  [cite_start]**Multi-Head Encoder:** A single encoder body with specialized heads to disentangle the input spectrogram into `z_content` and `z_speaker`[cite: 121].Instance Normalization is used in the content encoder to help remove speaker-specific statistics.
 2.  **Pitch Predictor:** An LSTM-based network that takes the `z_content` embedding and predicts a corresponding F0 contour.
-3.  **Conditional Decoder:** A generative network that synthesizes the output spectrogram conditioned on the content, speaker, phonation style, and predicted pitch. [cite_start]It uses **Adaptive Instance Normalization (AdaIN)** to inject the speaker style (`z_speaker`) at multiple levels of the synthesis process[cite: 140, 142].
+3.  **Conditional Decoder:** A generative network that synthesizes the output spectrogram conditioned on the content, speaker, phonation style, and predicted pitch.It uses **Adaptive Instance Normalization (AdaIN)** to inject the speaker style (`z_speaker`) at multiple levels of the synthesis process
 4.  **Dual Discriminators:**
     * [cite_start]**Spectrogram Discriminator (`D_spec`):** A PatchGAN discriminator that enforces the realism of the generated spectrogram output[cite: 145].
-    * [cite_start]**Latent Discriminator (`D_latent_spk`):** An MLP that works on the content embedding (`z_content`) to adversarially purge it of speaker information, improving disentanglement[cite: 147, 149].
+    * [cite_start]**Latent Discriminator (`D_latent_spk`):** An MLP that works on the content embedding (`z_content`) to adversarially purge it of speaker information, improving disentanglement.
 
 ## Setup and Installation
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
+    git clone https://github.com/Abhinavchad/dcc-vae-voice-conversion.git
     cd your-repo-name
     ```
 
@@ -54,19 +54,19 @@ The pipeline consists of several key neural network components:
 
 ### 1. Data Preparation
 
-1.  Place your raw normal speech audio files (e.g., LibriSpeech) inside the `raw_audio/normal_files/` directory.
-2.  Place your raw whispered speech audio files inside the `raw_audio/whisper_files/` directory.
+1.  Place your raw normal speech audio files (e.g., LibriSpeech) inside the `raw_audio/raw_audio/normal_files/` directory.
+2.  Place your raw whispered speech audio files inside the `raw_audio/raw_audio/whisper_files/` directory.
 3.  Run the preprocessing script. This will analyze all audio, extract spectrograms and F0 contours, compute normalization statistics, and save the processed features into the `data/` directory.
     ```bash
-    python preprocess.py
+    python preprocess_mini.py
     ```
 
 ### 2. Training
 
-1.  The training script `train.py` is configured with hyperparameters that were found to be stable, including a KL-divergence warm-up schedule.
+1.  The training script `train_mini.py` is configured with hyperparameters that were found to be stable, including a KL-divergence warm-up schedule.
 2.  To start training, run:
     ```bash
-    python train.py
+    python train_mini.py
     ```
 3.  You can monitor the training progress using TensorBoard:
     ```bash
@@ -75,14 +75,14 @@ The pipeline consists of several key neural network components:
 
 ### 3. Inference
 
-Once a model is trained, checkpoints will be saved in the `checkpoints/` directory. You can use the `inference.py` script to convert a new whisper file.
+Once a model is trained, checkpoints will be saved in the `checkpoints/` directory. You can use the `inference_mini.py` script to convert a new whisper file.
 
 ```bash
-python inference.py `
+python inference_mini.py `
     --input_wav "path/to/your/whisper.wav" `
     --output_wav "converted_speech.wav" `
     --encoder_checkpoint "checkpoints/YOUR_RUN_NAME/encoder_epoch_XXX.pth" `
     --decoder_checkpoint "checkpoints/YOUR_RUN_NAME/decoder_epoch_XXX.pth" `
     --pitch_predictor_checkpoint "checkpoints/YOUR_RUN_NAME/pitch_predictor_epoch_XXX.pth" `
-    --norm_stats "norm_stats.npz"
+    --norm_stats "norm_stats_mini.npz"
 ```
