@@ -56,7 +56,7 @@ The pipeline consists of several key neural network components:
 
 1.  Place your raw normal speech audio files (e.g., LibriSpeech) inside the `raw_audio/raw_audio/normal_files/` directory.
 2.  Place your raw whispered speech audio files inside the `raw_audio/raw_audio/whisper_files/` directory.
-3.  Run the preprocessing script. This will analyze all audio, extract spectrograms and F0 contours, compute normalization statistics, and save the processed features into the `data/` directory.
+3.  Run the preprocessing script. This will analyze all audio, extract spectrograms and F0 contours, compute normalization statistics, and save the processed features into the `data_mini/` directory.
     ```bash
     python preprocess_mini.py
     ```
