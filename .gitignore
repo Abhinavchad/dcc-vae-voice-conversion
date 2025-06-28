@@ -1,0 +1,24 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Large data and model directories
+data/
+data_mini/
+raw_audio/
+raw_audio_mini/
+checkpoints/
+
+# Downloaded dependencies from torch.hub
+NVIDIA_DeepLearningExamples_torchhub/
+snakers4_silero-models/
+snakers4_silero-models_master/
+*.zip
+
+# Saved outputs
+*.wav
+*.png
+*.npz
+
+# VS Code specific
+.vscode/
